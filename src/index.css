@@ -13,13 +13,3 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
-
-#map {
-  height: 100%;
-  width: 80%;
-}
-
-#root {
-  height: 100%;
-  width: 10%;
-}
