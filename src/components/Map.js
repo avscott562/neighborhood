@@ -51,7 +51,7 @@ class Map extends Component {
     return(
       <div id='map'>
         {sites.map(site => {
-          this.createMarker(site.venue.location.lat, site.venue.location.lng)
+          return this.createMarker(site.venue.location.lat, site.venue.location.lng)
         })}
       </div>
     )
