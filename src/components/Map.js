@@ -15,10 +15,11 @@ class Map extends Component {
     let map = new window.google.maps.Map(document.getElementById('map'), {
       center: { lat: 34.053018, lng: -118.267254 },
       zoom: 15
-    },
-    this.createMarker(this.lat, this.lng)
-    );
-    window.map = map
+    });
+    let marker = new window.google.maps.Marker({
+        position: {lat: 34.053018, lng: -118.267254},
+        map: map
+      });
   }
 
   loadScript = () => {
@@ -46,9 +47,13 @@ class Map extends Component {
 
   render() {
     const sites = this.props.spas
-    this.loadScript(sites);
+    this.loadScript();
     return(
-      <div id='map'></div>
+      <div id='map'>
+        {sites.map(site => {
+          this.createMarker(site.venue.location.lat, site.venue.location.lng)
+        })}
+      </div>
     )
   }
 }
