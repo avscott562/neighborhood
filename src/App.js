@@ -11,7 +11,10 @@ class App extends Component {
 
   componentDidMount() {
     SpasAPI.getAll().then((spas) => {
-      this.setState({ allSpas: spas })      
+      this.setState({ allSpas: spas })
+    })
+    .catch(err => {
+      this.setState({ allSpas: [] })
     })
   }
 
@@ -19,6 +22,7 @@ class App extends Component {
   render() {
     return (
       <main className="content">
+        <h1 className="header">Neighborhood Map</h1>
         <Sidebar spas={this.state.allSpas}/>
         <Map spas={this.state.allSpas}/>
       </main>

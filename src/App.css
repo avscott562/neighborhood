@@ -1,5 +1,11 @@
 .content {
   text-align: center;
+  background-color: #cecece;
+}
+
+.header {
+  padding: 0;
+  margin: 20px;
 }
 
 #map {
@@ -10,9 +16,13 @@
 #sidebar {
   height: 100vh;
   width: 25vw;
-  position: fixed;
+  position: absolute;
   z-index: 1;
   left: 0;
-  top: 0;
+  top: 10;
   background-color: #b3ecff;
+}
+
+.address, .city {
+  display: none;
 }

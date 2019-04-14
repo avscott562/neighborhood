@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import Location from './Location.js'
 
-class Sidebar extends Component {  
+class Sidebar extends Component {
   render() {
     const selectedSites = this.props.spas
     return (
       <div id="sidebar">
-        <h1>Local Spas</h1>
+        <h2>Local Spas</h2>
         <input type="text"/>
         <ol className="locationList">
           {selectedSites.map((site, key) => <Location site={site} key={site.venue.id} />)}
