@@ -30,7 +30,7 @@ class App extends Component {
   render() {
     this.loadScript();
     return (
-      <main>
+      <main className="content">
         <Sidebar />
         <div id="map"></div>
       </main>

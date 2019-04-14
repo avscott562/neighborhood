@@ -3,7 +3,12 @@ import React, { Component } from 'react';
 class Sidebar extends Component {
   render() {
     return (
-      <h1>Local Spas</h1>
+      <div id="sidebar">
+        <h1>Local Spas</h1>
+        <ol>
+          <li></li>
+        </ol>
+      </div>
     )
   }
 }
