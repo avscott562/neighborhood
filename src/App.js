@@ -1,8 +1,18 @@
 import React, { Component } from 'react';
 import Sidebar from './components/Sidebar.js'
+import * as SpasAPI from './SpasAPI.js'
 import './App.css';
 
 class App extends Component {
+  state = {
+    allSpas: []
+  }
+
+  componentDidMount() {
+    SpasAPI.getAll().then((spas) => {
+      this.setState({ allSpas: spas })      
+    })
+  }
 
   initMap() {
     let map = new window.google.maps.Map(document.getElementById('map'), {
@@ -31,7 +41,7 @@ class App extends Component {
     this.loadScript();
     return (
       <main className="content">
-        <Sidebar />
+        <Sidebar spas={this.state.allSpas}/>
         <div id="map"></div>
       </main>
     );
