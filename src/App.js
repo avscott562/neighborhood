@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Sidebar from './components/Sidebar.js'
 import './App.css';
 
 class App extends Component {
@@ -30,6 +31,7 @@ class App extends Component {
     this.loadScript();
     return (
       <main>
+        <Sidebar />
         <div id="map"></div>
       </main>
     );
