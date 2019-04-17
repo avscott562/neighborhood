@@ -11,20 +11,9 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.loadScript()
-    SpasAPI.getAll().then((spas) => {
-      this.setState({ allSpas: spas })
+    SpasAPI.getAll().then(spas => {
+      this.setState({ allSpas: spas }, this.loadScript())
     })
-    // .then((spas) => {
-    //   spas.forEach(spa => {
-    //     console.log(spa.venue.name)
-    //      // let marker = new window.google.maps.Marker({
-    //      //    position: {lat: spa.venue.location.lat, lng: spa.venue.location.lng},
-    //      //    map: this.map
-    //      //  })
-    //      //  this.state.allMarkers.push(marker)
-    //   })
-    // })
     .catch(err => {
       this.setState({ allSpas: [] })
     })
@@ -32,14 +21,17 @@ class App extends Component {
 
   initMap = () => {
     let map = new window.google.maps.Map(document.getElementById('map'), {
-      center: { lat: 34.053018, lng: -118.267254 },
-      zoom: 15
+      center: { lat: 34.0522, lng: -118.2437 },
+      zoom: 11
     })
-    let marker = new window.google.maps.Marker({
-        position: {lat: 34.053018, lng: -118.267254},
+    this.state.allSpas.map(spa => {
+      let marker = new window.google.maps.Marker({
+        position: {lat: spa.venue.location.lat, lng: spa.venue.location.lng},
         map: map
       })
-  }
+      return this.state.allMarkers.push(marker) })
+    }
+
 
   loadScript = () => {
     let script = this.createScript();

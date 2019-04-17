@@ -3,10 +3,13 @@ import React, { Component } from 'react';
 
 
 class Map extends Component {
-  render() {
+  componentDidMount() {
+    console.log("mount map")
+  }
 
+  render() {
     return(
-      console.log("new start")
+      <h3>map component</h3>
     )
   }
 }
