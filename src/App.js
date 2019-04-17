@@ -21,14 +21,25 @@ class App extends Component {
 
   initMap = () => {
     let map = new window.google.maps.Map(document.getElementById('map'), {
-      center: { lat: 34.0522, lng: -118.2437 },
-      zoom: 11
+      center: { lat: 34.0511, lng: -118.4165 },
+      zoom: 12
     })
+
+    let infowindow = new window.google.maps.InfoWindow()
+
     this.state.allSpas.map(spa => {
+      let contentString = spa.venue.name
+
       let marker = new window.google.maps.Marker({
         position: {lat: spa.venue.location.lat, lng: spa.venue.location.lng},
         map: map
       })
+
+      marker.addListener('click', function() {
+        infowindow.setContent(contentString)
+        infowindow.open(map, marker)
+      })
+
       return this.state.allMarkers.push(marker) })
     }
 
