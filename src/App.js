@@ -21,7 +21,7 @@ class App extends Component {
 
   initMap = () => {
     let map = new window.google.maps.Map(document.getElementById('map'), {
-      center: { lat: 34.0511, lng: -118.4165 },
+      center: { lat: 34.0511, lng: -118.4155 },
       zoom: 12
     })
 
@@ -32,7 +32,8 @@ class App extends Component {
 
       let marker = new window.google.maps.Marker({
         position: {lat: spa.venue.location.lat, lng: spa.venue.location.lng},
-        map: map
+        map: map,
+        isVisible: true
       })
 
       marker.addListener('click', function() {
