@@ -21,6 +21,12 @@
   left: 0;
   top: 10;
   background-color: #b3ecff;
+  overflow-y: scroll;
+}
+
+.site {
+  text-align: left;
+  list-style: none;
 }
 
 .address, .city {

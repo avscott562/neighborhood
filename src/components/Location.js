@@ -5,7 +5,7 @@ class Location extends Component {
     const { venue } = this.props.site
     return(
       <li className="site">
-        <div className="name">{venue.name}</div>
+        <h4 className="name" onClick={(e) => this.props.link(venue, e.target.value)}>{venue.name}</h4>
         <div className="address">{venue.location.formattedAddress[0]}</div>
         <div className="city">{venue.location.formattedAddress[1]}</div>
       </li>

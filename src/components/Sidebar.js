@@ -9,7 +9,7 @@ class Sidebar extends Component {
         <h2>Local Spas</h2>
         <input type="text"/>
         <ol className="locationList">
-          {selectedSites.map((site, key) => <Location site={site} key={site.venue.id} />)}
+          {selectedSites.map((site, key) => <Location site={site} key={site.venue.id} marker={this.props.markers} link={this.props.link} />)}
         </ol>
       </div>
     )
