@@ -70,10 +70,11 @@ class App extends Component {
   linkMarker = (loc) => {
     console.log("loc", loc)
     const markFinder = this.state.allMarkers.find(mf => mf.id === loc.id)
+    let infowindow = new window.google.maps.InfoWindow()
     if (markFinder) {
-      console.log("maf", markFinder)
-      // window.infowindow.setContent(loc.name)
-      // window.infowindow.open(window.map, markFinder)
+      console.log(markFinder)
+      infowindow.setContent(loc.name)
+      infowindow.open(window.map, markFinder)
     }
   }
 
