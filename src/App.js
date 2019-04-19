@@ -46,7 +46,6 @@ class App extends Component {
       })
 
       markers.push(marker) })
-      console.log("markers", markers)
 
       return this.setState({ allMarkers: markers })
     }
@@ -69,13 +68,21 @@ class App extends Component {
 
   linkMarker = (loc) => {
     console.log("loc", loc)
-    const markFinder = this.state.allMarkers.find(mf => mf.id === loc.id)
     let infowindow = new window.google.maps.InfoWindow()
+    this.hideInfowindows()
+    const markFinder = this.state.allMarkers.find(mf => mf.id === loc.id)
     if (markFinder) {
       console.log(markFinder)
       infowindow.setContent(loc.name)
       infowindow.open(window.map, markFinder)
     }
+  }
+
+  hideInfowindows = (map) => {
+    let infowindow = new window.google.maps.InfoWindow()
+    this.state.allMarkers.forEach(function(marker) {
+      infowindow.close(marker)
+    })
   }
 
 
