@@ -72,6 +72,7 @@ class App extends Component {
     const markFinder = this.state.allMarkers.find(mf => mf.id === loc.id)
     if (markFinder) {
       console.log(markFinder)
+      markFinder.setAnimation(window.google.maps.Animation.BOUNCE)
       window.infowindow.setContent(loc.name)
       window.infowindow.open(window.map, markFinder)
     }
@@ -80,6 +81,7 @@ class App extends Component {
   hideInfowindows = (map) => {
     this.state.allMarkers.forEach(function(marker) {
       window.infowindow.close()
+      marker.setAnimation(null)
     })
   }
 
