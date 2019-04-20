@@ -37,12 +37,16 @@ class App extends Component {
         position: {lat: spa.venue.location.lat, lng: spa.venue.location.lng},
         map: map,
         id: spa.venue.id,
-        isVisible: true
+        isVisible: true,
       })
 
       marker.addListener('click', function() {
         infowindow.setContent(contentString)
         infowindow.open(map, marker)
+        marker.setAnimation(window.google.maps.Animation.BOUNCE)
+        window.setTimeout(function() {
+          marker.setAnimation(null)
+        }, 1000)
       })
 
       markers.push(marker) })
