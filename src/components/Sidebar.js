@@ -13,7 +13,7 @@ class Sidebar extends Component {
           type="text"
           value={this.props.query}
           placeholder="Search Spas Here"
-          onChange={(e) => this.props.updateQuery(e.target.value)}
+          onChange={(e) => this.props.update(e.target.value)}
         />
         <ol className="locationList">
           {selectedSites.map((site, key) => <Location site={site} key={site.venue.id} marker={this.props.markers} link={this.props.link} />)}

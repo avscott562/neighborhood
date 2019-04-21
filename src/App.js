@@ -14,10 +14,10 @@ class App extends Component {
 
   componentDidMount() {
     SpasAPI.getAll().then(spas => {
-      this.setState({ allSpas: spas }, this.loadScript())
+      this.setState({ allSpas: spas, searchedSpas: spas }, this.loadScript())
     })
     .catch(err => {
-      this.setState({ allSpas: [] })
+      this.setState({ allSpas: [], searchedSpas: [] })
     })
   }
 
@@ -92,11 +92,16 @@ class App extends Component {
   }
 
   updateQuery = (query) => {
-    this.setState({ query: query.trim() }, this.searchSpas(query))
+    this.setState({ searchedSpas: this.state.allSpas, query: query.trim() })
+    if(query) {
+      this.setState({ searchedSpas: this.searchSpas(query, this.state.searchedSpas) })
+    } else {
+      this.setState({ searchedSpas: this.state.allSpas })
+    }
   }
 
-  searchSpas = () => {
-    console.log(this.state.query)
+  searchSpas = (query, spas) => {
+    return spas.filter(spa => spa.venue.name.toLowerCase().includes(query.toLowerCase()))
   }
 
 
@@ -105,11 +110,11 @@ class App extends Component {
       <main className="content">
         <h1 className="header">Neighborhood Map</h1>
         <Sidebar
-          spas={this.state.allSpas}
+          spas={this.state.searchedSpas}
           markers={this.state.allMarkers}
           link={this.linkMarker}
           query={this.state.query}
-          updateQuery={this.updateQuery}
+          update={this.updateQuery}
         />
         <div id="map"></div>
       </main>
