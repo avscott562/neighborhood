@@ -9,7 +9,8 @@ class App extends Component {
     allSpas: [],
     allMarkers: [],
     query: "",
-    searchedSpas: []
+    searchedSpas: [],
+    venueDetails: []
   }
 
   componentDidMount() {
@@ -34,16 +35,21 @@ class App extends Component {
     let markers = []
     let infowindow = new window.google.maps.InfoWindow()
     window.infowindow = infowindow
+    let content
 
     this.state.searchedSpas.map(spa => {
-      let contentString = spa.venue.name
+      console.log(spa)
+      let contentString = `<div id="infoWindow"><p>${spa.venue.name}</p>
+      <p>${spa.venue.location.address}</p>
+      <p>${spa.venue.location.city}</p>
+      <p>${spa.venue.location.crossStreet}</p></div>`
 
       let marker = new window.google.maps.Marker({
         position: {lat: spa.venue.location.lat, lng: spa.venue.location.lng},
         map: window.map,
         id: spa.venue.id,
         name: spa.venue.name,
-        isVisible: true,
+        visible: true
       })
 
       marker.addListener('click', function() {
@@ -75,13 +81,16 @@ class App extends Component {
     return script;
   }
 
-  linkMarker = (loc) => {    
+  linkMarker = (loc) => {
     this.hideInfowindows()
     const markFinder = this.state.allMarkers.find(mf => mf.id === loc.id)
     if (markFinder) {
-      console.log(markFinder)
+      let contentString = `<div id="infoWindow"><p>${loc.name}</p>
+      <p>${loc.location.address}</p>
+      <p>${loc.location.city}</p>
+      <p>${loc.location.crossStreet}</p></div>`
       markFinder.setAnimation(window.google.maps.Animation.BOUNCE)
-      window.infowindow.setContent(loc.name)
+      window.infowindow.setContent(contentString)
       window.infowindow.open(window.map, markFinder)
       window.setTimeout(function() {
         markFinder.setAnimation(null)
@@ -115,15 +124,26 @@ class App extends Component {
   hideMarkers = (query, markers) => {
     return markers.filter(mark => {
       if(!mark.name.toLowerCase().includes(query.toLowerCase())) {
-        mark.setMap(null)
+        mark.visible=false
       }
     })
   }
 
   showMarkers = (map) => {
     this.state.allMarkers.forEach(function(marker) {
-      marker.setMap(window.map)
+      marker.visible=true
     })
+  }
+
+  getVenueDetails = () => {
+    let details=[]
+    this.state.searchedSpas.forEach(function(site) {
+      let detail
+      SpasAPI.getDetails(site.id)
+      .then(res => detail)
+      .then(detail => details.push(detail))
+    })
+    return this.setState({ venueDetails: details })
   }
 
 
