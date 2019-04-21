@@ -22,29 +22,33 @@ class App extends Component {
   }
 
   initMap = () => {
-    let markers = []
     let map = new window.google.maps.Map(document.getElementById('map'), {
       center: { lat: 34.0511, lng: -118.4155 },
       zoom: 12
     })
     window.map = map
+    this.createMarker()
+  }
 
+  createMarker = () => {
+    let markers = []
     let infowindow = new window.google.maps.InfoWindow()
     window.infowindow = infowindow
 
-    this.state.allSpas.map(spa => {
+    this.state.searchedSpas.map(spa => {
       let contentString = spa.venue.name
 
       let marker = new window.google.maps.Marker({
         position: {lat: spa.venue.location.lat, lng: spa.venue.location.lng},
-        map: map,
+        map: window.map,
         id: spa.venue.id,
+        name: spa.venue.name,
         isVisible: true,
       })
 
       marker.addListener('click', function() {
         infowindow.setContent(contentString)
-        infowindow.open(map, marker)
+        infowindow.open(window.map, marker)
         marker.setAnimation(window.google.maps.Animation.BOUNCE)
         window.setTimeout(function() {
           marker.setAnimation(null)
@@ -54,8 +58,7 @@ class App extends Component {
       markers.push(marker) })
 
       return this.setState({ allMarkers: markers })
-    }
-
+  }
 
   loadScript = () => {
     let script = this.createScript();
@@ -72,8 +75,7 @@ class App extends Component {
     return script;
   }
 
-  linkMarker = (loc) => {
-    console.log("loc", loc)
+  linkMarker = (loc) => {    
     this.hideInfowindows()
     const markFinder = this.state.allMarkers.find(mf => mf.id === loc.id)
     if (markFinder) {
@@ -81,6 +83,9 @@ class App extends Component {
       markFinder.setAnimation(window.google.maps.Animation.BOUNCE)
       window.infowindow.setContent(loc.name)
       window.infowindow.open(window.map, markFinder)
+      window.setTimeout(function() {
+        markFinder.setAnimation(null)
+      }, 1500)
     }
   }
 
@@ -92,9 +97,12 @@ class App extends Component {
   }
 
   updateQuery = (query) => {
+    this.hideInfowindows()
+    this.showMarkers()
     this.setState({ searchedSpas: this.state.allSpas, query: query.trim() })
     if(query) {
       this.setState({ searchedSpas: this.searchSpas(query, this.state.searchedSpas) })
+      this.hideMarkers(query, this.state.allMarkers)
     } else {
       this.setState({ searchedSpas: this.state.allSpas })
     }
@@ -102,6 +110,20 @@ class App extends Component {
 
   searchSpas = (query, spas) => {
     return spas.filter(spa => spa.venue.name.toLowerCase().includes(query.toLowerCase()))
+  }
+
+  hideMarkers = (query, markers) => {
+    return markers.filter(mark => {
+      if(!mark.name.toLowerCase().includes(query.toLowerCase())) {
+        mark.setMap(null)
+      }
+    })
+  }
+
+  showMarkers = (map) => {
+    this.state.allMarkers.forEach(function(marker) {
+      marker.setMap(window.map)
+    })
   }
 
 
@@ -114,7 +136,7 @@ class App extends Component {
           markers={this.state.allMarkers}
           link={this.linkMarker}
           query={this.state.query}
-          update={this.updateQuery}
+          search={this.updateQuery}
         />
         <div id="map"></div>
       </main>
