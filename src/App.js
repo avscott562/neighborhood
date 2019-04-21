@@ -7,7 +7,9 @@ import './App.css';
 class App extends Component {
   state = {
     allSpas: [],
-    allMarkers: []
+    allMarkers: [],
+    query: "",
+    searchedSpas: []
   }
 
   componentDidMount() {
@@ -89,12 +91,26 @@ class App extends Component {
     })
   }
 
+  updateQuery = (query) => {
+    this.setState({ query: query.trim() }, this.searchSpas(query))
+  }
+
+  searchSpas = () => {
+    console.log(this.state.query)
+  }
+
 
   render() {
     return (
       <main className="content">
         <h1 className="header">Neighborhood Map</h1>
-        <Sidebar spas={this.state.allSpas} markers={this.state.allMarkers} link={this.linkMarker}/>
+        <Sidebar
+          spas={this.state.allSpas}
+          markers={this.state.allMarkers}
+          link={this.linkMarker}
+          query={this.state.query}
+          updateQuery={this.updateQuery}
+        />
         <div id="map"></div>
       </main>
     );
