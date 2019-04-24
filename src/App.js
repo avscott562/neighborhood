@@ -150,7 +150,7 @@ class App extends Component {
   render() {
     return (
       <main className="content">
-        <h1 className="header">Neighborhood Map</h1>
+        <h1 className="header" tabindex="0" >Neighborhood Map</h1>
         <Sidebar
           spas={this.state.searchedSpas}
           markers={this.state.allMarkers}
